@@ -1,6 +1,6 @@
-import { contractCreationHexIdentifier } from "./api";
+import { contractCreationHexIdentifier } from "../api";
 
-const app = require("./index");
+const app = require("../api/index");
 const request = require("supertest");
 
 const deployerAddress = "0x80805ae3cbE23715C1f1807A03C5fb669541C2A9";
