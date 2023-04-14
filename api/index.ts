@@ -2,9 +2,9 @@ var express = require("express");
 var app = express();
 
 const { ethers } = require("ethers");
-export const contractCreationHexIdentifier = "0x608060";
+const contractCreationHexIdentifier = "0x608060";
 
-export async function search(deployerAddress, network ) {
+async function search(deployerAddress, network ) {
   const etherscanProvider = new ethers.providers.EtherscanProvider(network);
   const history = await etherscanProvider.getHistory(deployerAddress);
 
