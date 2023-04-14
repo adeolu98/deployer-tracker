@@ -1,4 +1,4 @@
-import { contractCreationHexIdentifier } from ".";
+import { contractCreationHexIdentifier } from "./api";
 
 const app = require("./index");
 const request = require("supertest");
