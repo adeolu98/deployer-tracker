@@ -1,7 +1,4 @@
 # Typescript Package Starter
-
-A starter template to start your package with typescript
-
 It uses typescript, eslint and jest
 
 TS: Easy coding
@@ -11,9 +8,8 @@ JSDoc: Free Documentation (as long as you add comments)
 
 ## Usage
 
-Use it as template
-
-Build your own stuff
+clone repo and run `yarn install` 
+run `npx ts-node --esm ./src/index.ts` to start api 
 
 ## Scripts
 
