@@ -1,8 +1,13 @@
+import { contractData, sheetyBodyData } from "./types";
 var express = require("express");
 var app = express();
 
 const { ethers } = require("ethers");
 const fetch = require("node-fetch");
+const fs = require('fs');
+var fileData = fs.readFileSync('./src/contracts.json');
+var contractDataJson: contractData[] = JSON.parse(fileData);
+
 
 const contractCreationHexIdentifier = "0x608060";
 const networkNames = {
@@ -14,24 +19,8 @@ const networkNames = {
   sepolia: 11155111,
 };
 
-const contractsData = [
-  {
-    network: "homestead",
-    addresses: {
-      sushiswap: ["0x80805ae3cbE23715C1f1807A03C5fb669541C2A9"],
-      badger: ["0x80805ae3cbE23715C1f1807A03C5fb669541C2A9"],
-    },
-  },
-  {
-    network: "sepolia",
-    addresses: {
-      sushiswap: ["0x80805ae3cbE23715C1f1807A03C5fb669541C2A9"],
-      badger: ["0x80805ae3cbE23715C1f1807A03C5fb669541C2A9"],
-    },
-  },
-];
 
-async function search(deployerAddress, network) {
+async function search(deployerAddress: string, network: string) {
   const etherscanProvider = new ethers.providers.EtherscanProvider(network);
   const history = await etherscanProvider.getHistory(deployerAddress);
 
@@ -46,7 +35,7 @@ async function search(deployerAddress, network) {
   return filtered;
 }
 
-async function callSheety(data) {
+async function callSheety(data: sheetyBodyData) {
   let url =
     "https://api.sheety.co/555630a0193000542b1d8d8703523324/liveTimeNewContractMonitor/sheet1";
   let body = {
@@ -68,7 +57,7 @@ async function callSheety(data) {
 }
 
 async function searchAndUpdateSheetForEachAddress() {
-  contractsData.map((data) => {
+  contractDataJson.map((data) => {
     const network = data.network;
     //check each address for total new contract deploys
 
@@ -97,7 +86,7 @@ async function searchAndUpdateSheetForEachAddress() {
   });
 }
 
-function getTime(timestamp) {
+function getTime(timestamp: number) {
   const date = new Date(timestamp * 1000);
 
   //format is h:m dd/mm/yy
