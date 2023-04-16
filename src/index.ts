@@ -108,7 +108,7 @@ function getTime(timestamp) {
   }/${date.getFullYear().toString().slice(2)}`;
 }
 
-app.get(`/run`, async function (req, res) {
+app.get(`/update`, async function (req, res) {
   res.setHeader("Content-Type", "text/html");
   res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
 
@@ -116,7 +116,7 @@ app.get(`/run`, async function (req, res) {
   searchAndUpdateSheetForEachAddress();
 
   res.send({
-    message: "task completed",
+    message: "task done",
   });
 });
 
