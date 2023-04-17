@@ -23,7 +23,7 @@ export async function search(deployerAddress: string, network: string) {
   const filtered = history.filter((tx) => {
     if (
       tx.data.includes(contractCreationHexIdentifier) &&
-      Date.now() / 1000 - tx.timestamp <= 43200
+      Date.now() / 1000 - tx.timestamp <= fromHoursToSeconds(12)
     )
       return tx;
   });
@@ -66,7 +66,7 @@ export async function searchAndUpdateSheetForEachAddress(contractDataJson :contr
         const newSheetBody = filteredTxData.map((data) => {
           return {
             protocol: protocolName,
-            extraLabel: "",
+            extraLabel: data.from.slice(0,8),
             "date (withTime)": getTime(data.timestamp),
             chainId: networkNames[network].toString(),
             address: data.creates,
@@ -90,4 +90,9 @@ export function getTime(timestamp: number) {
   return `${hours.substr(-2)}:${minutes.substr(-2)} ${date.getDate()}/${
     date.getMonth() + 1
   }/${date.getFullYear().toString().slice(2)}`;
+}
+
+export function fromHoursToSeconds(hours: number) {
+    const oneHourInSeconds = 3600;
+    return hours * oneHourInSeconds;
 }
