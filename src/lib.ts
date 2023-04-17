@@ -13,7 +13,7 @@ export const networkNames: Record<string, number> = {
   "optimism": 10,
   "sepolia": 11155111,
 };
-
+export const deployTimeWindow = 12 //this value is in hours i.e last 12 hours
 
 export async function search(deployerAddress: string, network: string) {
   const etherscanProvider = new ethers.providers.EtherscanProvider(network);
@@ -23,7 +23,7 @@ export async function search(deployerAddress: string, network: string) {
   const filtered = history.filter((tx) => {
     if (
       tx.data.includes(contractCreationHexIdentifier) &&
-      Date.now() / 1000 - tx.timestamp <= fromHoursToSeconds(12)
+      Date.now() / 1000 - tx.timestamp <= fromHoursToSeconds(deployTimeWindow)
     )
       return tx;
   });
